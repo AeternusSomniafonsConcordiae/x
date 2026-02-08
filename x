@@ -3,148 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Static Poster / Billboard</title>
+    <title>Full Screen Billboard</title>
     <style>
-        /* --- VISUAL SETTINGS --- */
+        /* --- LAYOUT SETTINGS --- */
         :root {
-            --wall-bg: #e0e0e0;         /* The wall color behind the poster */
-            --poster-bg: #ffffff;       /* The poster paper color */
-            --text-main: #111111;       /* Main text color (Black/Dark Grey) */
-            --text-sub: #555555;        /* Subtitle color */
-            --poster-width: 550px;      /* Width of the poster */
+            --bg-color: #f4f4f4;       /* Background color of the whole page */
+            --text-color: #000000;     /* Main text color */
+            --sub-text-color: #555555; /* Secondary text color */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: var(--wall-bg);
-            color: var(--text-main);
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             
-            /* Centers the poster in the middle of the screen */
+            /* Full Height Layout */
             min-height: 100vh;
+            width: 100%;
+            
+            /* Center the content perfectly */
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            padding: 30px;
+            align-items: center;
             
-            /* Ensures the cursor stays default, never a "hand" pointer */
-            cursor: default;
+            padding: 40px; /* Small gap from the edge of screen */
+            text-align: center; /* Center align text */
+            cursor: default; /* Ensure no pointer icon appears */
         }
 
-        /* --- THE POSTER CONTAINER --- */
-        .poster {
-            background-color: var(--poster-bg);
+        /* --- CONTAINER FOR READABILITY --- */
+        /* This keeps text from stretching too wide on huge monitors, 
+           but doesn't look like a box/card. */
+        .content-wrapper {
+            max-width: 1200px; 
             width: 100%;
-            max-width: var(--poster-width);
-            
-            /* Visual styling for a poster look */
-            border-radius: 4px; /* Slight roundness, or 0 for sharp edges */
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2); /* Static shadow, no blur changes */
-            overflow: hidden;
-            text-align: center; /* Center align text by default */
         }
 
-        /* --- IMAGE AREA --- */
-        .poster-image {
+        /* --- MASSIVE TYPOGRAPHY --- */
+        
+        /* The Headline: Scales with screen width */
+        h1 {
+            font-size: 6vw; /* 6% of the viewport width (Huge) */
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        /* The Sub-headline / Date */
+        h2 {
+            font-size: 2vw; /* Scales with screen */
+            font-weight: 700;
+            color: var(--sub-text-color);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 50px;
+        }
+
+        /* The Main Body Text */
+        p {
+            font-size: 1.5rem; /* Large, readable size */
+            line-height: 1.6;
+            color: var(--sub-text-color);
+            max-width: 800px; /* Limits line length for easier reading */
+            margin: 0 auto 40px auto; /* Centers paragraph block */
+        }
+
+        /* --- OPTIONAL FULL WIDTH IMAGE --- */
+        .billboard-image {
             width: 100%;
-            height: 300px; /* Adjust height as needed */
-            background-color: #cccccc;
-            display: block;
-            overflow: hidden;
+            height: 50vh; /* Takes up half the screen height */
+            background-color: #ccc;
+            margin-bottom: 50px;
+            display: none; /* Hidden by default, remove 'display: none' to use */
         }
 
-        .poster-image img {
+        .billboard-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures image fills the space perfectly */
+            object-fit: cover;
             display: block;
         }
 
-        /* --- TEXT CONTENT AREA --- */
-        .poster-content {
-            padding: 40px 50px;
-        }
-
-        /* --- TYPOGRAPHY --- */
-        h1 {
-            font-size: 32px;
-            font-weight: 800;
-            text-transform: uppercase; /* Poster style: all caps */
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
-
-        h2 {
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--text-sub);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #ddd;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        p {
-            font-size: 16px;
-            color: #444;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        /* Small footer credit style */
-        .poster-footer {
-            margin-top: 30px;
-            font-size: 12px;
-            color: #999;
-            font-style: italic;
-        }
-
-        /* --- MOBILE TWEAKS --- */
-        @media (max-width: 600px) {
-            .poster-content { padding: 30px 25px; }
-            h1 { font-size: 24px; }
-            .poster-image { height: 200px; }
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 12vw; }   /* Even bigger relative size on mobile */
+            h2 { font-size: 4vw; }
+            p  { font-size: 1.2rem; } /* Slightly smaller on mobile */
+            body { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="poster">
-        
-        <!-- 1. IMAGE SECTION -->
-        <!-- Remove this block if you don't want a top image -->
-        <div class="poster-image">
-            <!-- Replace src with your image URL -->
-            <img src="https://picsum.photos/seed/poster/600/400" alt="Poster Main Visual">
+    <div class="content-wrapper">
+
+        <!-- OPTIONAL: Full Width Image Area -->
+        <!-- 
+        <div class="billboard-image" style="display:block;">
+            <img src="YOUR_IMAGE_URL.jpg" alt="Background Visual">
+        </div> 
+        -->
+
+        <!-- SUBHEADLINE / TAGLINE -->
+        <h2>[INSERT TAGLINE OR DATE HERE]</h2>
+
+        <!-- MAIN HEADLINE (MASSIVE) -->
+        <h1>[INSERT YOUR MAIN HEADLINE HERE]</h1>
+
+        <!-- BODY TEXT -->
+        <p>
+            [Insert your main text here. This text is large and legible, designed to be read from a distance like a billboard. It fills the screen without being contained in a box.]
+        </p>
+
+        <!-- SECOND PARAGRAPH (Optional) -->
+        <!-- 
+        <p>
+            [Insert additional text here.]
+        </p> 
+        -->
+
+        <!-- FOOTER CREDIT -->
+        <div style="margin-top: 60px; font-size: 1rem; color: #999; letter-spacing: 1px;">
+            [INSERT FOOTER CREDIT]
         </div>
 
-        <div class="poster-content">
-            
-            <!-- 2. SUBTITLE / TAGLINE -->
-            <h2>[INSERT TAGLINE OR DATE HERE]</h2>
-
-            <!-- 3. MAIN HEADLINE -->
-            <h1>[INSERT YOUR MAIN HEADLINE HERE]</h1>
-
-            <!-- 4. BODY TEXT -->
-            <p>
-                [Insert your descriptive text here. Since this is a billboard style, keep sentences concise and impactful. The text is centered and static.]
-            </p>
-
-            <p>
-                [You can add a second paragraph here for additional details, location, or information.]
-            </p>
-
-            <!-- 5. FOOTER / CREDIT (Optional) -->
-            <div class="poster-footer">
-                [Insert footer info, e.g., "Created by ..." or "www.yoursite.com"]
-            </div>
-
-        </div>
     </div>
 
 </body>
